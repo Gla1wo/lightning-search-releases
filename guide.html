@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lightning Search user guide</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">
+:root {
+--bg: #fbfbfc;
+--text: #1d1d22;
+--muted: #5b5b66;
+--accent: #2f6fe0;
+--rule: #dcdce2;
+--code-bg: #eeeef2;
+--head-bg: #f0f0f4;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+--bg: #1b1b1f;
+--text: #e6e6ea;
+--muted: #a3a3ad;
+--accent: #7aa7ff;
+--rule: #3a3a42;
+--code-bg: #2a2a31;
+--head-bg: #26262c;
+}
+}
+html { background: var(--bg); }
+body {
+margin: 0 auto;
+max-width: 46rem;
+padding: 2rem 1rem 4rem;
+color: var(--text);
+background: var(--bg);
+font: 16px/1.55 "Segoe UI", system-ui, sans-serif;
+}
+header h1.title { font-size: 2rem; margin-bottom: 0.2rem; }
+header .subtitle { color: var(--muted); margin-top: 0; }
+h1 { font-size: 1.5rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+h2 { font-size: 1.15rem; margin-top: 1.8rem; }
+a { color: var(--accent); }
+code { background: var(--code-bg); padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.92em; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--rule); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+th { background: var(--head-bg); }
+img { max-width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 4px; }
+nav#TOC { border: 1px solid var(--rule); border-radius: 6px; padding: 0.5rem 1rem; margin: 1.5rem 0; }
+nav#TOC ul { padding-left: 1.2rem; margin: 0.3rem 0; }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lightning Search user guide</h1>
+<p class="subtitle">Version 0.9 beta</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#what-lightning-search-is" id="toc-what-lightning-search-is">What Lightning Search is</a></li>
+<li><a href="#requirements" id="toc-requirements">Requirements</a></li>
+<li><a href="#installing" id="toc-installing">Installing</a></li>
+<li><a href="#first-run" id="toc-first-run">First run</a></li>
+<li><a href="#the-core-loop" id="toc-the-core-loop">The core
+loop</a></li>
+<li><a href="#searching" id="toc-searching">Searching</a></li>
+<li><a href="#listening" id="toc-listening">Listening</a></li>
+<li><a href="#adding-sounds-to-the-project" id="toc-adding-sounds-to-the-project">Adding sounds to the
+project</a></li>
+<li><a href="#favorites-playlists-and-databases" id="toc-favorites-playlists-and-databases">Favorites, playlists and
+databases</a></li>
+<li><a href="#settings" id="toc-settings">Settings</a></li>
+<li><a href="#shortcuts" id="toc-shortcuts">Shortcuts</a></li>
+<li><a href="#privacy" id="toc-privacy">Privacy</a></li>
+<li><a href="#troubleshooting" id="toc-troubleshooting">Troubleshooting</a></li>
+<li><a href="#reporting-a-bug-or-sending-feedback" id="toc-reporting-a-bug-or-sending-feedback">Reporting a bug or sending
+feedback</a></li>
+<li><a href="#uninstalling" id="toc-uninstalling">Uninstalling</a></li>
+</ul>
+</nav>
+<h1 id="what-lightning-search-is">What Lightning Search is</h1>
+<p>Lightning Search finds sounds in your library from inside Reaper as
+fast as you can type, lets you hear them through Reaper, and puts them
+on the timeline with one key.</p>
+<p>It has two parts:</p>
+<ul>
+<li><strong>The search window in Reaper.</strong> A Reaper script you
+open with a shortcut. You type, the results update on every key, you
+listen with the arrow keys and press Enter to add a sound at the edit
+cursor.</li>
+<li><strong>The helper.</strong> A small program in the Windows
+notification area (the tray, by the clock). It reads your library
+folders once, keeps a search index of them, and keeps that index up to
+date as files are added, changed or removed. Reaper asks the helper for
+results, so searching never touches your disks.</li>
+</ul>
+<p>Lightning Search reads the metadata already embedded in your files
+(by Soundminer, BaseHead, Reaper’s Media Explorer and similar tools):
+file name, description, category and CatID, keywords, library, designer
+and the rest. It never writes to your files and does not edit
+metadata.</p>
+<h1 id="requirements">Requirements</h1>
+<ul>
+<li>Windows 10 or 11, 64-bit.</li>
+<li>Reaper 5.982 or newer (any edition, installed or portable).</li>
+<li>The SWS extension, version 2.14 or newer: <a href="https://www.sws-extension.org" class="uri">https://www.sws-extension.org</a>.</li>
+<li>ReaImGui, version 0.9 or newer, installed through ReaPack
+(Extensions &gt; ReaPack &gt; Browse packages, search for
+ReaImGui).</li>
+<li>Sound files in WAV, Broadcast WAV, RF64, Wave64, AIFF or FLAC.</li>
+</ul>
+<h1 id="installing">Installing</h1>
+<ol type="1">
+<li>Download <code>LightningSearch-0.9.0-beta-setup.exe</code> from the
+Gumroad page.</li>
+<li>Run it. The installer is not code-signed yet, so Windows SmartScreen
+may show “Windows protected your PC”. Click <strong>More info</strong>,
+then <strong>Run anyway</strong>. Some browsers also ask whether to keep
+the download: choose <strong>Keep</strong>.</li>
+<li>The installer finds your Reaper resource folders, including portable
+ones it can see. Tick each Reaper you want Lightning Search in;
+<strong>Add…</strong> picks another folder (the one that holds
+<code>reaper.ini</code>).</li>
+<li>It checks for SWS and ReaImGui in each folder and says which are
+missing. You can still install and add them afterwards.</li>
+<li>If Reaper is running, the installer asks you to close it first.</li>
+<li>On the last page, <strong>Start Lightning Search now</strong> starts
+the helper and opens its welcome window.</li>
+</ol>
+<p>Lightning Search installs for your Windows user only, so it needs no
+administrator rights. The program goes in
+<code>%LOCALAPPDATA%\Programs\Lightning Search</code>; in each Reaper
+folder it adds <code>UserPlugins\reaper_lightning.dll</code> and
+<code>Scripts\Lightning Search\</code>. The next time Reaper starts, it
+adds the Lightning Search actions to the Action List by itself.</p>
+<p>To update, run a newer installer over the old one. Your library
+index, settings, favorites and playlists stay.</p>
+<h1 id="first-run">First run</h1>
+<p>The helper’s welcome window walks through three steps:</p>
+<ol type="1">
+<li><strong>Add your library folders.</strong> Click <strong>Add library
+folder…</strong> and pick each folder that holds sounds. External and
+network drives work; when one is unplugged its sounds stay in the index,
+marked offline.</li>
+<li><strong>Start scanning.</strong> The helper reads the metadata of
+every file. The progress page shows how many sounds it has found, how
+many are searchable already, and an estimate of the time left. You can
+search while it scans: results grow as it goes. A large library takes a
+while the first time (Andrew’s 276,000-file library on a USB drive took
+about two hours); after that, only changes are read.</li>
+<li><strong>Open Lightning Search in Reaper.</strong> In Reaper, choose
+<strong>Actions &gt; Show action list</strong>, type
+<code>Lightning_Search</code> and run <strong>Script:
+Lightning_Search.lua</strong>. To open it with a key, select it, click
+<strong>Add…</strong> under Shortcuts and press the keys. We suggest
+<strong>Ctrl+Shift+L</strong> (Reaper already uses Ctrl+Shift+F).</li>
+</ol>
+<p>The helper then sits in the tray and starts with Windows, so it is
+always ready when Reaper is. You can turn that off in the helper’s
+settings or the tray menu.</p>
+<h1 id="the-core-loop">The core loop</h1>
+<ol type="1">
+<li>Press your shortcut. The search window opens with the cursor in the
+search box.</li>
+<li>Type. Results update on every key.</li>
+<li>Press <strong>Down</strong> to move into the results. Each result
+plays as you reach it.</li>
+<li>Press <strong>Enter</strong>. The sound lands at the edit cursor on
+the selected track, and the window hides. <strong>Ctrl+Z</strong> in
+Reaper takes it back.</li>
+</ol>
+<p>Click the <strong>?</strong> icon by the cog at any time for a cheat
+sheet of every key, with your own shortcuts filled in. It also has
+<strong>Open the user guide</strong>, which opens this guide.</p>
+<h1 id="searching">Searching</h1>
+<p>Type words and Lightning Search finds sounds whose name or metadata
+holds all of them. The last word matches as you type it:
+<code>expl</code> already finds explosions.</p>
+<table>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Finds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>metal door</code></td>
+<td>sounds with both words, anywhere in their name or metadata</td>
+</tr>
+<tr class="even">
+<td><code>metal, wood</code></td>
+<td>sounds with either word (a comma means “or”)</td>
+</tr>
+<tr class="odd">
+<td><code>-wood</code></td>
+<td>hides sounds that have the word</td>
+</tr>
+<tr class="even">
+<td><code>&quot;glass break&quot;</code></td>
+<td>the words side by side, in that order</td>
+</tr>
+<tr class="odd">
+<td><code>impact (metal, wood)</code></td>
+<td>brackets group words: metal impact or wood impact</td>
+</tr>
+<tr class="even">
+<td><code>crash*</code></td>
+<td>crash, crashes, crashing… (a star at the end of one word)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Find every ending</strong> (Settings &gt; Search, on by
+default) does the star for every word, so <code>crash</code> also finds
+crashes and crashing. Words after a minus stay exact.</p>
+<h2 id="searching-one-detail">Searching one detail</h2>
+<p>A name and a colon searches just that detail:</p>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Searches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lib:boom</code> or <code>library:&quot;Boom Library&quot;</code></td>
+<td>the library name</td>
+</tr>
+<tr class="even">
+<td><code>cat:door</code></td>
+<td>the UCS category or subcategory</td>
+</tr>
+<tr class="odd">
+<td><code>catid:DOORWood</code></td>
+<td>the exact CatID</td>
+</tr>
+<tr class="even">
+<td><code>desc:</code>, <code>kw:</code>, <code>filename:</code>,
+<code>fx:</code>, <code>designer:</code>, <code>mfr:</code>,
+<code>recordist:</code>, <code>mic:</code>, <code>notes:</code>,
+<code>subcat:</code></td>
+<td>description, keywords, file name, FX name, designer, manufacturer,
+recordist, microphone, notes, subcategory</td>
+</tr>
+<tr class="odd">
+<td><code>dur:1s..5s</code>, <code>dur:&lt;500ms</code>,
+<code>dur:&gt;2m</code></td>
+<td>length (ms, s, m, h; a bare number is seconds)</td>
+</tr>
+<tr class="even">
+<td><code>ch:stereo</code>, <code>ch:mono</code>,
+<code>ch:&gt;2</code></td>
+<td>channel count</td>
+</tr>
+<tr class="odd">
+<td><code>sr:48k</code>, <code>sr:44.1k..96k</code></td>
+<td>sample rate</td>
+</tr>
+<tr class="even">
+<td><code>bits:&gt;=24</code></td>
+<td>bit depth</td>
+</tr>
+<tr class="odd">
+<td><code>type:flac</code>, <code>type:wav</code></td>
+<td>file type</td>
+</tr>
+<tr class="even">
+<td><code>vars:1</code>, <code>vars:&gt;=10</code>,
+<code>vars:2..5</code></td>
+<td>how many separate sounds (variations) the file holds</td>
+</tr>
+<tr class="odd">
+<td><code>created:2024</code>, <code>modified:..2023-12-31</code></td>
+<td>file dates (a year or month covers all of it)</td>
+</tr>
+</tbody>
+</table>
+<p>Numbers and dates take <code>&gt;</code>, <code>&gt;=</code>,
+<code>&lt;</code>, <code>&lt;=</code> and ranges written
+<code>a..b</code>, <code>a..</code> or <code>..b</code>.</p>
+<h2 id="thesaurus">Thesaurus</h2>
+<p>The book button (<strong>Alt+T</strong>) turns the thesaurus on or
+off. With it on, <code>helicopter</code> also finds files that only say
+chopper or heli, ranked below the files that say helicopter. The line
+under the search box lists the extra words it searched. Settings &gt;
+Search chooses the sources (word forms, UCS categories, sound design
+synonyms, your own groups) and lets you add your own groups or import a
+Soundminer <code>.tth</code> thesaurus.</p>
+<h2 id="filters-and-sorting">Filters and sorting</h2>
+<p>The funnel button opens filters for file type, sample rate, bit
+depth, channels, length and variations. Each filter shows as a chip by
+the search box; its x removes it. Click a column header to sort by it,
+again to reverse, and a third time to go back to relevance.</p>
+<h2 id="databases">Databases</h2>
+<p>The dropdown at the left of the search box picks a
+<strong>database</strong>: a named set of library folders to search,
+such as “Foley” or “Creatures”. <strong>All folders</strong> searches
+everything. <strong>Ctrl+1</strong> to <strong>Ctrl+9</strong> pick the
+first nine databases in the list. Make and edit them in Settings &gt;
+Databases (or the helper’s settings window).</p>
+<h1 id="listening">Listening</h1>
+<ul>
+<li><strong>Down</strong> / <strong>Up</strong> move through the results
+and play each one; <strong>Page Down</strong> / <strong>Page Up</strong>
+move a page at a time.</li>
+<li><strong>Space</strong> plays or stops the highlighted sound.</li>
+<li>Click the waveform to play from that point; drag across it to pick a
+range. A picked range is what plays and what gets added.</li>
+<li><strong>Left</strong> / <strong>Right</strong> step through a
+sound’s <strong>variations</strong>: the separate hits inside one file.
+“Skip initial silence” (Settings &gt; Audition, on by default) starts
+each sound at its first variation. The Variations panel under the
+waveform sets how loud a hit must be and how long a gap separates
+two.</li>
+<li><strong>Reverse</strong> (<strong>R</strong>), the channel pick and
+<strong>Pitch</strong> also apply to what you add to the project.
+<strong>Loop</strong> (<strong>L</strong>) and <strong>Volume</strong>
+are only for listening.</li>
+<li><strong>FX</strong> (<strong>F</strong>) plays sounds through the
+selected track’s effects and fader, so you hear them as they will sound
+in the mix. Settings &gt; Audition can send them through a dedicated
+“Lightning Search FX” track instead.</li>
+<li><strong>Sync</strong> (<strong>S</strong>) plays the sound with
+Reaper’s transport, starting a pre-roll before the edit cursor, so you
+hear it in place against picture and other tracks. Reaper’s own Play and
+Stop work too while Sync is on.</li>
+</ul>
+<p>Lightning Search plays sounds through Reaper itself, on hidden
+audition tracks, so they come out of your usual audio device.</p>
+<h1 id="adding-sounds-to-the-project">Adding sounds to the project</h1>
+<ul>
+<li><strong>Enter</strong> adds the highlighted sound at the edit cursor
+on the selected track. With no track selected, it makes a new track for
+it.</li>
+<li><strong>New track</strong> (<strong>Ctrl+T</strong>) puts each sound
+on its own new track below the selected one, named after the sound.</li>
+<li><strong>Ctrl+click</strong> or <strong>Shift+click</strong> picks
+several results; Enter adds them one after another.</li>
+<li>Settings &gt; Workflow picks how you place sounds:
+<ul>
+<li><strong>Spotting</strong> (the default): keys add at the edit
+cursor, and you can right-drag the waveform onto a track.</li>
+<li><strong>Drag to timeline</strong>: drag results straight from the
+list onto a track; the window folds away so you can see where you
+drop.</li>
+</ul></li>
+<li>Each addition is one undo step in Reaper (Ctrl+Z), including any
+track it made.</li>
+</ul>
+<p>Lightning Search never copies or converts files: items point at your
+library files where they are.</p>
+<h1 id="favorites-playlists-and-databases">Favorites, playlists and
+databases</h1>
+<ul>
+<li><strong>B</strong> (or the star at the start of a row) adds the
+highlighted sound to <strong>Favorites</strong>.</li>
+<li>The panel button at the left of the search bar shows the sidebar:
+Library, Favorites and your folders and playlists. Right-click it for
+<strong>New playlist</strong> and <strong>New folder</strong>.</li>
+<li>Right-click results for <strong>Add to playlist</strong>, or drag
+results onto a playlist in the sidebar.</li>
+<li>Clicking a playlist searches inside it. With the search box empty it
+shows the playlist in its own order, and you can drag rows to reorder or
+press <strong>Delete</strong> to remove them.</li>
+<li>A sound whose file has gone shows greyed out with its old name, so
+you can see what was there.</li>
+<li>Favorites and playlists are kept by the helper and survive rescans,
+index rebuilds and updates.</li>
+<li>The details panel (<strong>Ctrl+I</strong>) shows all of a sound’s
+metadata and its embedded artwork.</li>
+</ul>
+<h1 id="settings">Settings</h1>
+<p>Open them with the cog in the search window. Every change applies at
+once. Each tab has <strong>Reset to defaults</strong> for that tab
+only.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tab</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>General</td>
+<td>What the open shortcut, Esc, clicking outside and Enter do to the
+window; docking and always on top; tooltips; the update check; About
+(versions); third-party notices; Report a bug or send feedback</td>
+</tr>
+<tr class="even">
+<td>Search</td>
+<td>Find every ending; the thesaurus on or off, its sources and your own
+groups</td>
+</tr>
+<tr class="odd">
+<td>Audition</td>
+<td>Play on click; play while paging; skip initial silence; waveform
+channels; pitch reset; where FX plays through; the sync pre-roll</td>
+</tr>
+<tr class="even">
+<td>Workflow</td>
+<td>Spotting or Drag to timeline; the gap between sounds added
+together</td>
+</tr>
+<tr class="odd">
+<td>Shortcuts</td>
+<td>Two shortcuts per action, each a key or a middle or side mouse
+button with Ctrl, Shift or Alt; right-click a box to clear it</td>
+</tr>
+<tr class="even">
+<td>Databases</td>
+<td>Your databases and the folders in each</td>
+</tr>
+<tr class="odd">
+<td>Appearance</td>
+<td>Text size and row height</td>
+</tr>
+<tr class="even">
+<td>Colors</td>
+<td>The window’s colours, the waveform and the playback cursor</td>
+</tr>
+</tbody>
+</table>
+<p>The helper has its own settings window (click the tray icon): library
+folders and databases, how it keeps up with changes (live watching, or a
+daily check at a time you pick), scanning in the background at low
+priority, starting with Windows, the update check, and where its data
+lives.</p>
+<h1 id="shortcuts">Shortcuts</h1>
+<p>These are the search window’s default keys. Change any of them in
+Settings &gt; Shortcuts. Home, End, Esc and Backspace are fixed.</p>
+<!-- shortcuts:begin (checked against reaper/lib/keymap.lua by reaper/tests/guide_spec.lua) -->
+<table>
+<thead>
+<tr class="header">
+<th>Action</th>
+<th>Default key</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Next result</td>
+<td>Down</td>
+</tr>
+<tr class="even">
+<td>Previous result</td>
+<td>Up</td>
+</tr>
+<tr class="odd">
+<td>Page down</td>
+<td>Page Down</td>
+</tr>
+<tr class="even">
+<td>Page up</td>
+<td>Page Up</td>
+</tr>
+<tr class="odd">
+<td>Add to the timeline</td>
+<td>Enter</td>
+</tr>
+<tr class="even">
+<td>Play / stop</td>
+<td>Space</td>
+</tr>
+<tr class="odd">
+<td>Previous variation</td>
+<td>Left</td>
+</tr>
+<tr class="even">
+<td>Next variation</td>
+<td>Right</td>
+</tr>
+<tr class="odd">
+<td>Add to favorites</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>Remove from playlist</td>
+<td>Delete</td>
+</tr>
+<tr class="odd">
+<td>Audition through track FX</td>
+<td>F</td>
+</tr>
+<tr class="even">
+<td>Sync with playback</td>
+<td>S</td>
+</tr>
+<tr class="odd">
+<td>Loop</td>
+<td>L</td>
+</tr>
+<tr class="even">
+<td>Reverse</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Search box</td>
+<td>Ctrl+F</td>
+</tr>
+<tr class="even">
+<td>Back to the search box</td>
+<td>Tab</td>
+</tr>
+<tr class="odd">
+<td>New track option</td>
+<td>Ctrl+T</td>
+</tr>
+<tr class="even">
+<td>Thesaurus on/off</td>
+<td>Alt+T</td>
+</tr>
+<tr class="odd">
+<td>Details panel</td>
+<td>Ctrl+I</td>
+</tr>
+<tr class="even">
+<td>Database 1 to 9 in the list</td>
+<td>Ctrl+1 to Ctrl+9</td>
+</tr>
+</tbody>
+</table>
+<!-- shortcuts:end -->
+<p>Opening the window, adding the highlighted sound and auditioning it
+are also Reaper actions (<strong>Script: Lightning_Search.lua</strong>,
+<strong>Lightning_Commit.lua</strong> and
+<strong>Lightning_Audition.lua</strong>), so you can give them keys in
+Reaper’s Action List that work even when the search window is not
+focused.</p>
+<h1 id="privacy">Privacy</h1>
+<ul>
+<li>Your library, its index, your searches, favorites and playlists stay
+on your computer. Lightning Search has no account, no analytics and no
+usage tracking.</li>
+<li><strong>The update check</strong> (once a day; Settings &gt; General
+can turn it off) downloads one small file from
+<code>gla1wo.github.io</code> saying what the newest version is. It
+sends nothing about you or your library; like any web request, it
+reveals your IP address to GitHub.</li>
+<li><strong>Bug reports</strong> are only made when you ask, and never
+sent by themselves. You see everything in the report before it is made,
+and you choose whether to attach it to the form. Library folders become
+<code>&lt;library 1&gt;</code>, other paths become
+<code>&lt;path&gt;</code>, and your user name, computer name and email
+addresses are removed. Searches and metadata never appear in the
+logs.</li>
+</ul>
+<p>Lightning Search keeps its data in
+<code>%LOCALAPPDATA%\Lightning</code>: the catalogue and index,
+favorites and playlists, your thesaurus, logs and reports. The search
+window’s own settings live in Reaper’s
+<code>reaper-extstate.ini</code>.</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p><strong>“The helper isn’t running.”</strong> Start <strong>Lightning
+Search</strong> from the Start menu; the search window connects by
+itself. If it keeps stopping, send a bug report (below): it includes any
+crash notes.</p>
+<p><strong>A drive shows as offline.</strong> Its sounds stay listed,
+greyed and marked offline, until the drive is back. When it is, the
+helper checks it for changes by itself. To drop a drive you no longer
+use, remove its folder in the helper’s settings.</p>
+<p><strong>New files don’t show up.</strong> With live watching (the
+default), changes appear within about a minute. Network drives may not
+report changes: use <strong>Rescan now</strong> in the tray menu, or
+switch to a daily check in the helper’s settings.</p>
+<p><strong>The first scan is slow.</strong> Reading every file’s
+metadata takes time on large libraries, especially on USB or network
+drives. You can search while it runs. “Scan in the background” keeps it
+at low priority so Reaper never stutters; you can pause it from the tray
+menu.</p>
+<p><strong>Antivirus.</strong> Some antivirus tools briefly lock files
+Lightning Search is writing to its index; the helper waits and tries
+again. If your antivirus quarantines or blocks
+<code>lightning-helper.exe</code> or the installer, allow them: the
+builds are not code-signed yet.</p>
+<p><strong>Lightning Search is missing from Reaper’s Action
+List.</strong> Restart Reaper once after installing. If it is still
+missing, load
+<code>Scripts\Lightning Search\scripts\Lightning_Search.lua</code> with
+<strong>New action &gt; Load ReaScript…</strong> in the Action List.</p>
+<p><strong>“ReaImGui is missing” or “SWS is missing”.</strong> Install
+them (see Requirements) and restart Reaper.</p>
+<p><strong>No sound when auditioning.</strong> Check Reaper’s audio
+device is running (Options &gt; Audio device) and that its master output
+is not muted. Auditions play through Reaper.</p>
+<h1 id="reporting-a-bug-or-sending-feedback">Reporting a bug or sending
+feedback</h1>
+<p>Use <strong>Report a bug or send feedback…</strong> in the tray menu,
+or in the search window under Settings &gt; General.</p>
+<ol type="1">
+<li>Choose Bug, Idea or Other and write what happened.</li>
+<li><strong>Show what will be sent</strong> shows the whole report.</li>
+<li><strong>Create report</strong> saves a zip in
+<code>%LOCALAPPDATA%\Lightning\reports</code>, shows it in Explorer and
+opens the feedback form in your browser. Paste your message there and
+attach the zip. The form needs a Google sign-in to upload files.</li>
+</ol>
+<h1 id="uninstalling">Uninstalling</h1>
+<p>Open Windows <strong>Settings &gt; Apps &gt; Installed apps</strong>,
+find <strong>Lightning Search</strong> and choose
+<strong>Uninstall</strong>. It closes the helper, removes the program
+and the Reaper files it added, and takes its actions out of Reaper’s
+Action List. It asks whether to keep your library index, favorites,
+playlists and settings, in case you install again; choose
+<strong>No</strong> to remove them too. Your sound files are never
+touched.</p>
+</body>
+</html>
