@@ -8,7 +8,7 @@ serves this repository at <https://gla1wo.github.io/lightning-search-releases/>.
   sends nothing about you or your library.
 - `guide.html`: the user guide, the online copy of the one installed with the program.
 
-Download Lightning Search from its Gumroad page.
+Download Lightning Search from its Gumroad page: <https://chilipop.gumroad.com/l/LightningSearch>.
 
 ## Releasing
 See `docs/release.md` in the main repository. `latest.json` holds
