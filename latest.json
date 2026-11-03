@@ -1,5 +1,5 @@
 {
-  "version": "0.9.0-beta.1",
+  "version": "0.9.1-beta",
   "url": "https://chilipop.gumroad.com/l/LightningSearch",
-  "notes": "Test build: bug report, always-on-top, Space and audition fixes; dim played results."
+  "notes": "First beta update, and the first Mac build: Sync is now Y, F turns FX on again, mono files on both sides, Report a bug fixed, installer finds Reaper."
 }
