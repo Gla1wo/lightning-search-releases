@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1-beta",
+  "version": "0.9.2-beta",
   "url": "https://chilipop.gumroad.com/l/LightningSearch",
-  "notes": "First beta update, and the first Mac build: Sync is now Y, F turns FX on again, mono files on both sides, Report a bug fixed, installer finds Reaper."
+  "notes": "Waveform selections stay visible, Add folder opens Explorer or Finder everywhere, and a new folder shows its scan at once."
 }
