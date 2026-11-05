@@ -1,5 +1,5 @@
 {
-  "version": "0.9.2-beta",
+  "version": "0.9.3-beta",
   "url": "https://chilipop.gumroad.com/l/LightningSearch",
-  "notes": "Waveform selections stay visible, Add folder opens Explorer or Finder everywhere, and a new folder shows its scan at once."
+  "notes": "Spellcheck in the search box, a choice of the fields search looks in, channel buttons, and New track uses an empty selected track."
 }
