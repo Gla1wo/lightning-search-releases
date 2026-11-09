@@ -1,5 +1,5 @@
 {
-  "version": "0.9.4-beta",
+  "version": "0.9.5-beta",
   "url": "https://chilipop.gumroad.com/l/LightningSearch",
-  "notes": "Switching to another program from the Windows taskbar takes one click again while the search window is open."
+  "notes": "Reaper's save prompt and error boxes stay in front of the search window; drag a waveform selection onto the timeline; hiding a sound asks first; and more fixes."
 }
