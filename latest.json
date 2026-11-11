@@ -1,5 +1,5 @@
 {
-  "version": "0.9.5-beta",
+  "version": "0.9.6-beta",
   "url": "https://chilipop.gumroad.com/l/LightningSearch",
-  "notes": "Reaper's save prompt and error boxes stay in front of the search window; drag a waveform selection onto the timeline; hiding a sound asks first; and more fixes."
+  "notes": "Pitch changes smoothly while you drag, through Lightning Search's own player; a Never dock the window option; Pitch starts at 100% each time; and more fixes."
 }
