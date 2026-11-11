@@ -246,7 +246,9 @@ so typing replaces it. Typing a letter that is not a shortcut while the
 results have the keyboard adds it to the search. Your Reaper shortcut
 for Lightning Search does what Settings &gt; Visibility &gt; “Shortcut
 while the window has focus” says when the window already has focus, and
-selects the search whenever the window stays open.</p>
+selects the search whenever the window stays open. If that shortcut is a
+plain key such as <strong>1</strong>, it types into the search box while
+you are typing there, and works from the results list.</p>
 <p>The clock button left of the search box lists your recent searches
 (the ones you picked a sound from since Reaper started); click one to
 run it again, or clear the list.</p>
@@ -448,9 +450,11 @@ and <strong>Pitch</strong> also apply to what you add to the project.
 <strong>Loop</strong> (<strong>L</strong>) and <strong>Volume</strong>
 are only for listening, unless Settings &gt; Audition &gt; “Apply the
 audition volume to added sounds” is on.</p></li>
-<li><p>A playing sound follows <strong>Pitch</strong> while you drag it.
+<li><p>A playing sound follows <strong>Pitch</strong> while you drag it,
+changing speed smoothly in place through Lightning Search’s own player.
 Turn off “Live Pitch” in Settings &gt; Audition to have it change speed
-only when you let go.</p></li>
+only when you let go, or turn off “Smooth Pitch” to play through SWS
+instead, which starts the sound again at each speed.</p></li>
 <li><p><strong>FX</strong> (<strong>F</strong>) plays sounds through the
 selected track’s effects and fader, so you hear them as they will sound
 in the mix. Settings &gt; Audition can send them through a dedicated
@@ -562,7 +566,7 @@ only.</p>
 <td>General</td>
 <td>What the open shortcut, Esc, clicking outside and Enter do to the
 window (hide it, collapse it to the search bar, or collapse it to the
-search bar and waveform); docking and always on top; tooltips; the
+search bar and waveform); docking (and Never dock the window) and always on top; tooltips; the
 update check; About (versions); third-party notices; Report a bug or
 send feedback</td>
 </tr>
@@ -573,9 +577,9 @@ or off, its sources and your own groups</td>
 </tr>
 <tr class="odd">
 <td>Audition</td>
-<td>Play on click; play while paging; Live Pitch; skip initial silence;
-waveform channels; pitch reset; where FX plays through; the sync
-pre-roll</td>
+<td>Play on click; play while paging; Live Pitch; Smooth Pitch; skip
+initial silence; waveform channels; pitch reset; where FX plays through;
+the sync pre-roll</td>
 </tr>
 <tr class="even">
 <td>Workflow</td>
